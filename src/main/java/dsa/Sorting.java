@@ -1,10 +1,9 @@
 package dsa;
 
 import model.Book;
-import java.util.List;
-
+import dsa.ArrayList.ArrayListADT;
 public class Sorting {
-    public static void insertionSort(List<Book> books) {
+    public static void insertionSort(ArrayListADT<Book> books) {
         int n = books.size();
         for (int i = 1; i < n; i++) {
             Book key = books.get(i);

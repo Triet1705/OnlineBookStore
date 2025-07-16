@@ -1,4 +1,4 @@
-package dsa;
+package dsa.LinkedList;
 
 public interface AbstractLinkedList<E> {
     void addFirst(E element);

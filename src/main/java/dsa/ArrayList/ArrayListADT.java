@@ -1,4 +1,4 @@
-package dsa;
+package dsa.ArrayList;
 
 public class ArrayListADT<E> implements AbstractList<E> {
     private E[] elements;

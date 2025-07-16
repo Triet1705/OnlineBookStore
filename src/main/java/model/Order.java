@@ -1,22 +1,21 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import dsa.ArrayList.ArrayListADT;
 
 public class Order {
     private String orderId;
     private Customer customer;
-    private List<Book> books;
+    private ArrayListADT<Book> books;
 
     public Order(String orderId, Customer customer) {
         this.orderId = orderId;
         this.customer = customer;
-        this.books = new ArrayList<>();
+        this.books = new ArrayListADT<>();
     }
     public void addBook(Book book) {
         this.books.add(book);
     }
-    public List<Book> getBooks() {
+    public ArrayListADT<Book> getBooks() {
         return books;
     }
     public Customer getCustomer() {
