@@ -10,13 +10,11 @@ import dsa.Searching;
 import java.util.Scanner;
 
 public class BookstoreSystem {
-    // --- SYSTEM ATTRIBUTES ---
     private final Scanner scanner;
     private final Customer defaultCustomer;
     private final ArrayListADT<Book> availableBooks;
     private final LinkedQueueADT<Order> orderQueue;
 
-    // --- CONSTRUCTOR ---
     public BookstoreSystem() {
         this.scanner = new Scanner(System.in);
         this.defaultCustomer = new Customer("Pham Minh Triet", "20 Thi Sach", "0823735666");
@@ -25,7 +23,6 @@ public class BookstoreSystem {
         loadDefaultBooks();
     }
 
-    // --- MAIN APPLICATION LOOP ---
     public void run() {
         System.out.println("WELCOME TO THE ONLINE BOOKSTORE SYSTEM");
         System.out.println("Default Customer: " + defaultCustomer.getName());
@@ -53,8 +50,6 @@ public class BookstoreSystem {
             }
         }
     }
-
-    // --- LOGIC HANDLING METHODS ---
 
     private void handleOrderCreation() {
         Order newOrder = createNewOrder();
@@ -85,21 +80,54 @@ public class BookstoreSystem {
 
         System.out.println("\n--- BOOKS AFTER SORTING (BY TITLE) ---");
         printBooks(booksInOrder);
-
         System.out.println("\n--- SEARCH FOR A BOOK IN THE ORDER ---");
-        System.out.print("Enter the title of the book to search for: ");
-        String titleToSearch = scanner.nextLine();
-        Book foundBook = Searching.binarySearchByTitle(booksInOrder, titleToSearch);
 
-        if (foundBook != null) {
-            System.out.println("=> Found '" + foundBook.getTitle() + "' in the order.");
-        } else {
-            System.out.println("=> Could not find '" + titleToSearch + "' in the order.");
+        searchLoop:
+        while (true) {
+            System.out.println("\n--- CHOOSE SEARCH ALGORITHM ---");
+            System.out.println("1. Flexible Search (Linear Search)");
+            System.out.println("2. Exact Search (Binary Search)");
+            System.out.println("3. Finish Searching This Order");
+            System.out.print("Your choice: ");
+            String searchChoice = scanner.nextLine();
+
+            switch (searchChoice) {
+                case "1":
+                    System.out.print("Enter book title for FLEXIBLE search: ");
+                    String linearTerm = scanner.nextLine();
+                    Book linearResult = Searching.linearSearchFlexible(booksInOrder, linearTerm);
+                    if (linearResult != null) {
+                        System.out.println("=> Found: " + linearResult.getTitle());
+                    } else {
+                        System.out.println("=> No books found matching '" + linearTerm + "'.");
+                    }
+                    break;
+
+                case "2":
+                    System.out.print("Enter EXACT book title for BINARY search: ");
+                    String binaryTerm = scanner.nextLine();
+                    Book binaryResult = Searching.binarySearchByTitle(booksInOrder, binaryTerm);
+                    if (binaryResult != null) {
+                        System.out.println("=> Found: " + binaryResult.getTitle() + " by " + binaryResult.getAuthor());
+                    } else {
+                        System.out.println("=> No exact match found for '" + binaryTerm + "'.");
+                    }
+                    break;
+
+                case "3":
+                break searchLoop;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         }
+
         System.out.println("--- FINISHED PROCESSING ORDER ---");
+        System.out.println("\n--- FINISHED ORDER: " + orderToProcess.getOrderId() + " ---");
+        System.out.println("Customer name: " + orderToProcess.getCustomer().getName());
+        System.out.println("Shipping address: " + orderToProcess.getCustomer().getAddress());
     }
 
-    // --- HELPER METHODS ---
 
     private Order createNewOrder() {
         String orderId = "ORD" + (int)(Math.random() * 1000);
@@ -146,13 +174,8 @@ public class BookstoreSystem {
         availableBooks.add(new Book("To Kill a Mockingbird", "Harper Lee"));
     }
 
-    // --- MAIN METHOD (ENTRY POINT) ---
-    // Đây là hàm main đã được gộp vào
     public static void main(String[] args) {
-        // Tạo một đối tượng của hệ thống nhà sách
         BookstoreSystem mySystem = new BookstoreSystem();
-
-        // Bắt đầu chạy hệ thống
         mySystem.run();
     }
 }
