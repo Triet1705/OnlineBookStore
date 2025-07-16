@@ -1,4 +1,4 @@
-package dsa;
+package dsa.LinkedList;
 
 
 public class LinkedListADT<E> implements AbstractLinkedList<E> {

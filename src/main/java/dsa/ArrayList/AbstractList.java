@@ -1,4 +1,4 @@
-package dsa;
+package dsa.ArrayList;
 
 public interface AbstractList<E> {
     boolean add(E element);
