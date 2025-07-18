@@ -4,7 +4,6 @@ public class ArrayListADT<E> implements AbstractList<E> {
     private E[] elements;
     private int size;
 
-    // Constructor
     public ArrayListADT() {
         this.elements = (E[]) new Object[3];
     }

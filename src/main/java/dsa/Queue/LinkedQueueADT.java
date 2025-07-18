@@ -10,7 +10,6 @@ public class LinkedQueueADT<E> implements AbstractLinkedQueue<E> {
         }
     }
 
-    // Thuộc tính của Queue
     private Node<E> head;
     private Node<E> tail;
     private int size;
@@ -32,7 +31,6 @@ public class LinkedQueueADT<E> implements AbstractLinkedQueue<E> {
             this.tail.next = newNode;
             this.tail = newNode;
         }
-
         this.size++;
     }
 

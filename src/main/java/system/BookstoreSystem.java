@@ -74,12 +74,12 @@ public class BookstoreSystem {
         ArrayListADT<Book> booksInOrder = orderToProcess.getBooks();
 
         System.out.println("\n--- BOOKS BEFORE SORTING ---");
-        printBooks(booksInOrder);
+        printBookTitles(booksInOrder);
 
         Sorting.insertionSort(booksInOrder);
 
         System.out.println("\n--- BOOKS AFTER SORTING (BY TITLE) ---");
-        printBooks(booksInOrder);
+        printBookTitles(booksInOrder);
         System.out.println("\n--- SEARCH FOR A BOOK IN THE ORDER ---");
 
         searchLoop:
@@ -95,9 +95,10 @@ public class BookstoreSystem {
                 case "1":
                     System.out.print("Enter book title for FLEXIBLE search: ");
                     String linearTerm = scanner.nextLine();
-                    Book linearResult = Searching.linearSearchFlexible(booksInOrder, linearTerm);
-                    if (linearResult != null) {
-                        System.out.println("=> Found: " + linearResult.getTitle());
+                    ArrayListADT<Book> linearResults = Searching.linearSearchFlexible(booksInOrder, linearTerm);
+                    if (!linearResults.isEmpty()) {
+                        System.out.println("=> Found " + linearResults.size() + " result(s):");
+                        printSearchResults(linearResults);
                     } else {
                         System.out.println("=> No books found matching '" + linearTerm + "'.");
                     }
@@ -106,16 +107,17 @@ public class BookstoreSystem {
                 case "2":
                     System.out.print("Enter EXACT book title for BINARY search: ");
                     String binaryTerm = scanner.nextLine();
-                    Book binaryResult = Searching.binarySearchByTitle(booksInOrder, binaryTerm);
-                    if (binaryResult != null) {
-                        System.out.println("=> Found: " + binaryResult.getTitle() + " by " + binaryResult.getAuthor());
+                    ArrayListADT<Book> binaryResults = Searching.binarySearchByTitle(booksInOrder, binaryTerm);
+                    if (!binaryResults.isEmpty()) {
+                        System.out.println("=> Found " + binaryResults.size() + " result(s):");
+                        printSearchResults(binaryResults);
                     } else {
                         System.out.println("=> No exact match found for '" + binaryTerm + "'.");
                     }
                     break;
 
                 case "3":
-                break searchLoop;
+                    break searchLoop;
 
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -161,11 +163,19 @@ public class BookstoreSystem {
         return newOrder;
     }
 
-    private void printBooks(ArrayListADT<Book> books) {
+    private void printBookTitles(ArrayListADT<Book> books) {
         for (int i = 0; i < books.size(); i++) {
             System.out.println("- " + books.get(i).getTitle());
         }
     }
+
+    private void printSearchResults(ArrayListADT<Book> books) {
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
+            System.out.println("- " + book.getTitle() + " by " + book.getAuthor());
+        }
+    }
+
 
     private void loadDefaultBooks() {
         availableBooks.add(new Book("Dune", "Frank Herbert"));
