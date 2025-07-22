@@ -5,7 +5,9 @@ public class ArrayListADT<E> implements AbstractList<E> {
     private int size;
 
     public ArrayListADT() {
-        this.elements = (E[]) new Object[3];
+        // Khởi tạo với một kích thước mặc định
+        this.elements = (E[]) new Object[10];
+        this.size = 0;
     }
 
     private void ensureCapacity() {
@@ -18,6 +20,11 @@ public class ArrayListADT<E> implements AbstractList<E> {
         }
     }
 
+    public void clear() {
+        this.size = 0;
+    }
+    // ------------------------------------
+
     @Override
     public boolean add(E element) {
         ensureCapacity();
@@ -26,6 +33,7 @@ public class ArrayListADT<E> implements AbstractList<E> {
         return true;
     }
 
+    // ... (các phương thức khác giữ nguyên không thay đổi)
     @Override
     public boolean add(int index, E element) {
         if (index < 0 || index > size) {

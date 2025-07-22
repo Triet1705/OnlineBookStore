@@ -1,19 +1,60 @@
 package dsa;
 
-import model.Book;
+import model.OrderItem;
 import dsa.ArrayList.ArrayListADT;
 public class Sorting {
-    public static void insertionSort(ArrayListADT<Book> books) {
-        int n = books.size();
+    public static void insertionSort(ArrayListADT<OrderItem> items) {
+        int n = items.size();
         for (int i = 1; i < n; i++) {
-            Book key = books.get(i);
+            OrderItem key = items.get(i);
             int j = i - 1;
 
-            while (j >= 0 && books.get(j).compareTo(key) > 0) {
-                books.set(j + 1, books.get(j));
-                j = j -1;
+            while (j >= 0 && items.get(j).compareTo(key) > 0) {
+                items.set(j + 1, items.get(j));
+                j = j - 1;
             }
-            books.set(j + 1, key);
+            items.set(j + 1, key);
         }
     }
+//    public static void mergeSort(ArrayListADT<Book> books) {
+//        int n = books.size();
+//        if (n < 2) {
+//            return;
+//        }
+//
+//        int mid = n / 2;
+//        ArrayListADT<Book> leftHalf = new ArrayListADT<>();
+//        for (int i = 0; i < mid; i++) {
+//            leftHalf.add(books.get(i));
+//        }
+//        ArrayListADT<Book> rightHalf = new ArrayListADT<>();
+//        for (int i = mid; i < n; i++) {
+//            rightHalf.add(books.get(i));
+//        }
+//
+//        mergeSort(leftHalf);
+//        mergeSort(rightHalf);
+//        merge(books, leftHalf, rightHalf);
+//    }
+//
+//    private static void merge(ArrayListADT<Book> originalList, ArrayListADT<Book> leftHalf, ArrayListADT<Book> rightHalf) {
+//        int leftSize = leftHalf.size();
+//        int rightSize = rightHalf.size();
+//        int i = 0, j = 0, k = 0;
+//
+//        while (i < leftSize && j < rightSize) {
+//            if (leftHalf.get(i).compareTo(rightHalf.get(j)) <= 0) {
+//                originalList.set(k++, leftHalf.get(i++));
+//            } else {
+//                originalList.set(k++, rightHalf.get(j++));
+//            }
+//        }
+//
+//        while (i < leftSize) {
+//            originalList.set(k++, leftHalf.get(i++));
+//        }
+//        while (j < rightSize) {
+//            originalList.set(k++, rightHalf.get(j++));
+//        }
+//    }
 }
