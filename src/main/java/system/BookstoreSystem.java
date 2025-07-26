@@ -1,9 +1,6 @@
 package system;
 
-import model.Book;
-import model.Customer;
-import model.Order;
-import model.OrderItem;
+import model.*;
 import dsa.ArrayList.ArrayListADT;
 import dsa.Queue.LinkedQueueADT;
 import dsa.Sorting;
@@ -97,7 +94,10 @@ public class BookstoreSystem {
         }
 
         Order orderToProcess = orderQueue.poll();
+        orderToProcess.setStatus(OrderStatus.PROCESSING);
+
         System.out.println("\n--- PROCESSING ORDER: " + orderToProcess.getOrderId() + " ---");
+        System.out.println("Status: " + orderToProcess.getStatus());
         System.out.println("Customer: " + orderToProcess.getCustomer().getName());
 
         ArrayListADT<OrderItem> itemsInOrder = orderToProcess.getItems();
@@ -148,6 +148,8 @@ public class BookstoreSystem {
         }
 
         System.out.println("\n--- FINISHED PROCESSING ORDER: " + orderToProcess.getOrderId() + " ---");
+        orderToProcess.setStatus(OrderStatus.COMPLETED);
+        System.out.println("Status: " + orderToProcess.getStatus());
         System.out.println("Customer: " + orderToProcess.getCustomer().getName());
         System.out.println("Shipping Address: " + orderToProcess.getCustomer().getAddress());
     }
@@ -166,8 +168,7 @@ public class BookstoreSystem {
 
         while (!orderQueue.isEmpty()) {
             Order order = orderQueue.poll();
-            System.out.println("\n" + count + ". Order ID: " + order.getOrderId() + " | Customer: " + order.getCustomer().getName());
-            printOrderItems(order);
+            System.out.println("\n" + count + ". Order ID: " + order.getOrderId() + " | Customer: " + order.getCustomer().getName() + " | Status: " + order.getStatus());            printOrderItems(order);
             tempQueue.offer(order);
             count++;
         }
@@ -225,7 +226,7 @@ public class BookstoreSystem {
 
         System.out.println("Please select an order to delete:");
         for (int i = 0; i < orderList.size(); i++) {
-            System.out.println((i + 1) + ". Order ID: " + orderList.get(i).getOrderId());
+            System.out.println((i + 1) + ". Order ID: " + orderList.get(i).getOrderId() + " | Customer: " + orderList.get(i).getCustomer().getName() + " | Status: " + orderList.get(i).getStatus());
         }
         System.out.println("0. Cancel");
         System.out.print("Your choice: ");
@@ -236,6 +237,7 @@ public class BookstoreSystem {
 
             if (choice > 0 && choice <= orderList.size()) {
                 Order removedOrder = orderList.remove(choice - 1);
+                removedOrder.setStatus(OrderStatus.CANCELLED);
                 returnStock(removedOrder);
                 arrayListToQueue(orderList);
                 System.out.println("==> Order " + removedOrder.getOrderId() + " has been successfully deleted.");
@@ -304,7 +306,7 @@ public class BookstoreSystem {
     private Order editOrder(Order orderToEdit, boolean isNewOrder) {
         while (true) {
             System.out.println("\n--- ORDER " + (isNewOrder ? "CREATION" : "EDITING") + " MENU ---");
-            System.out.println("Editing Order: " + orderToEdit.getOrderId());
+            System.out.println("Editing Order: " + orderToEdit.getOrderId() + " | Status: " + orderToEdit.getStatus());
             System.out.println("1. Add a book");
             System.out.println("2. Remove a book");
             System.out.println("3. View current order");
