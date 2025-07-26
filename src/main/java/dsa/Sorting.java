@@ -16,45 +16,45 @@ public class Sorting {
             items.set(j + 1, key);
         }
     }
-//    public static void mergeSort(ArrayListADT<Book> books) {
-//        int n = books.size();
-//        if (n < 2) {
-//            return;
-//        }
-//
-//        int mid = n / 2;
-//        ArrayListADT<Book> leftHalf = new ArrayListADT<>();
-//        for (int i = 0; i < mid; i++) {
-//            leftHalf.add(books.get(i));
-//        }
-//        ArrayListADT<Book> rightHalf = new ArrayListADT<>();
-//        for (int i = mid; i < n; i++) {
-//            rightHalf.add(books.get(i));
-//        }
-//
-//        mergeSort(leftHalf);
-//        mergeSort(rightHalf);
-//        merge(books, leftHalf, rightHalf);
-//    }
-//
-//    private static void merge(ArrayListADT<Book> originalList, ArrayListADT<Book> leftHalf, ArrayListADT<Book> rightHalf) {
-//        int leftSize = leftHalf.size();
-//        int rightSize = rightHalf.size();
-//        int i = 0, j = 0, k = 0;
-//
-//        while (i < leftSize && j < rightSize) {
-//            if (leftHalf.get(i).compareTo(rightHalf.get(j)) <= 0) {
-//                originalList.set(k++, leftHalf.get(i++));
-//            } else {
-//                originalList.set(k++, rightHalf.get(j++));
-//            }
-//        }
-//
-//        while (i < leftSize) {
-//            originalList.set(k++, leftHalf.get(i++));
-//        }
-//        while (j < rightSize) {
-//            originalList.set(k++, rightHalf.get(j++));
-//        }
-//    }
+    public static void mergeSort(ArrayListADT<OrderItem> items) {
+        int n = items.size();
+        if (n < 2) {
+            return;
+        }
+
+        int mid = n / 2;
+        ArrayListADT<OrderItem> leftHalf = new ArrayListADT<>();
+        for (int i = 0; i < mid; i++) {
+            leftHalf.add(items.get(i));
+        }
+        ArrayListADT<OrderItem> rightHalf = new ArrayListADT<>();
+        for (int i = mid; i < n; i++) {
+            rightHalf.add(items.get(i));
+        }
+
+        mergeSort(leftHalf);
+        mergeSort(rightHalf);
+        merge(items, leftHalf, rightHalf);
+    }
+
+    private static void merge(ArrayListADT<OrderItem> originalList, ArrayListADT<OrderItem> leftHalf, ArrayListADT<OrderItem> rightHalf) {
+        int leftSize = leftHalf.size();
+        int rightSize = rightHalf.size();
+        int i = 0, j = 0, k = 0;
+
+        while (i < leftSize && j < rightSize) {
+            if (leftHalf.get(i).compareTo(rightHalf.get(j)) <= 0) {
+                originalList.set(k++, leftHalf.get(i++));
+            } else {
+                originalList.set(k++, rightHalf.get(j++));
+            }
+        }
+
+        while (i < leftSize) {
+            originalList.set(k++, leftHalf.get(i++));
+        }
+        while (j < rightSize) {
+            originalList.set(k++, rightHalf.get(j++));
+        }
+    }
 }
